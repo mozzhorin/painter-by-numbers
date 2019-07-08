@@ -1,0 +1,54 @@
+apiVersion: v1
+data:
+  GOOGLE_APPLICATION_CREDENTIALS: /var/secrets/user-gcp-sa.json
+  exportDir: gs://painters-mnist-2-1561980951/export
+  modelDir: gs://painters-mnist-2-1561980951/
+  name: painers-manual-job
+  secretMountPath: /var/secrets
+  secretName: user-gcp-sa
+  trainSteps: "1"
+kind: ConfigMap
+metadata:
+  name: painters-map-training-c82f674fbt
+---
+apiVersion: kubeflow.org/v1beta2
+kind: TFJob
+metadata:
+  name: painers-manual-job
+  namespace: kubeflow
+spec:
+  tfReplicaSpecs:
+    Worker:
+      replicas: 1
+      template:
+        spec:
+          containers:
+          - command:
+            - python
+            - /opt/model.py
+            - --tf-model-dir=$(modelDir)
+            - --tf-export-dir=$(exportDir)
+            - --tf-train-steps=$(trainSteps)
+            env:
+            - name: modelDir
+              value: gs://painters-mnist-2-1561980951/
+            - name: exportDir
+              value: gs://painters-mnist-2-1561980951/export
+            - name: trainSteps
+              value: "1"
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /var/secrets/user-gcp-sa.json
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /var/secrets/user-gcp-sa.json
+            image: gcr.io/painters-mnist-2/kubeflow-train:1562417171
+            name: tensorflow
+            volumeMounts:
+            - mountPath: /var/secrets
+              name: user-gcp-sa
+              readOnly: true
+            workingDir: /opt
+          restartPolicy: OnFailure
+          volumes:
+          - name: user-gcp-sa
+            secret:
+              secretName: user-gcp-sa

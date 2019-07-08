@@ -1,0 +1,4 @@
+grpcio
+numpy
+scipy
+Pillow

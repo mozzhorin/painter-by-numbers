@@ -1,0 +1,12 @@
+#This container contains your model and any helper scripts specific to your model.
+FROM python:3.7
+FROM tensorflow/tensorflow:1.13.1-py3
+
+COPY requirements_io.txt /opt/
+RUN pip install -r /opt/requirements_io.txt
+
+ADD model.py /opt/model.py
+RUN chmod +x /opt/model.py
+
+ENTRYPOINT ["python"]
+CMD ["/opt/model.py"]

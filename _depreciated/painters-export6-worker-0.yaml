@@ -1,0 +1,130 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: 2019-07-05T12:05:57Z
+  labels:
+    group-name: kubeflow.org
+    tf-job-name: painters-export6
+    tf-job-role: master
+    tf-replica-index: "0"
+    tf-replica-type: worker
+  name: painters-export6-worker-0
+  namespace: kubeflow
+  ownerReferences:
+  - apiVersion: kubeflow.org/v1beta2
+    blockOwnerDeletion: true
+    controller: true
+    kind: TFJob
+    name: painters-export6
+    uid: 3f728559-9f1d-11e9-800d-42010af000c9
+  resourceVersion: "190275"
+  selfLink: /api/v1/namespaces/kubeflow/pods/painters-export6-worker-0
+  uid: 3f7708b1-9f1d-11e9-800d-42010af000c9
+spec:
+  containers:
+  - args:
+    - /opt/model.py
+    - --tf-model-dir=gs://painters-mnist-2-1561980951/
+    - --tf-export-dir=gs://painters-mnist-2-1561980951/export/
+    - --tf-train-steps=1
+    command:
+    - python
+    env:
+    - name: GOOGLE_APPLICATION_CREDENTIALS
+      value: /var/secrets/user-gcp-sa.json
+    - name: secretName
+      value: user-gcp-sa
+    - name: secretMountPath
+      value: /var/secrets
+    - name: TF_CONFIG
+      value: '{"cluster":{"worker":["painters-export6-worker-0.kubeflow.svc:2222"]},"task":{"type":"worker","index":0},"environment":"cloud"}'
+    image: gcr.io/painters-mnist-2/kubeflow-train:1561980951
+    imagePullPolicy: IfNotPresent
+    name: tensorflow
+    ports:
+    - containerPort: 2222
+      name: tfjob-port
+      protocol: TCP
+    resources:
+      limits:
+        cpu: "4"
+        memory: 8Gi
+        nvidia.com/gpu: "0"
+      requests:
+        cpu: "2"
+        memory: 4Gi
+        nvidia.com/gpu: "0"
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: default-token-srnhr
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  nodeName: gke-kubeflow-kubeflow-cpu-pool-v1-b1afc686-zmpb
+  priority: 0
+  restartPolicy: Never
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoSchedule
+    key: nvidia.com/gpu
+    operator: Exists
+  volumes:
+  - name: default-token-srnhr
+    secret:
+      defaultMode: 420
+      secretName: default-token-srnhr
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: 2019-07-05T12:05:57Z
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: 2019-07-05T12:06:35Z
+    message: 'containers with unready status: [tensorflow]'
+    reason: ContainersNotReady
+    status: "False"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: null
+    message: 'containers with unready status: [tensorflow]'
+    reason: ContainersNotReady
+    status: "False"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: 2019-07-05T12:05:57Z
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: docker://8d4a74681d6aca381c1b30706237e81edec410eec53d6c3cc641d8a186261578
+    image: gcr.io/painters-mnist-2/kubeflow-train:1561980951
+    imageID: docker-pullable://gcr.io/painters-mnist-2/kubeflow-train@sha256:d9bd368cd7694f820f3fcc0cf912e16d45fce554ba7ae634e28d0d2676c9dcf8
+    lastState: {}
+    name: tensorflow
+    ready: false
+    restartCount: 0
+    state:
+      terminated:
+        containerID: docker://8d4a74681d6aca381c1b30706237e81edec410eec53d6c3cc641d8a186261578
+        exitCode: 1
+        finishedAt: 2019-07-05T12:06:34Z
+        reason: Error
+        startedAt: 2019-07-05T12:06:32Z
+  hostIP: 10.128.0.7
+  phase: Failed
+  podIP: 10.20.1.30
+  qosClass: Burstable
+  startTime: 2019-07-05T12:05:57Z

@@ -1,0 +1,82 @@
+apiVersion: kubeflow.org/v1
+kind: TFJob
+metadata:
+  generateName: tfjob
+  namespace: kubeflow
+spec:
+  tfReplicaSpecs:
+    PS:
+      replicas: 1
+      restartPolicy: OnFailure
+      template:
+        spec:
+          containers:
+          - name: tensorflow
+            image: gcr.io/your-project/your-image
+            command:
+              - python
+              - -m
+              - trainer.task
+              - --batch_size=32
+              - --training_steps=1000
+            env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/etc/secrets/user-gcp-sa.json"
+            volumeMounts:
+            - name: sa
+              mountPath: "/etc/secrets"
+              readOnly: true
+          volumes:
+          - name: sa
+            secret:
+              secretName: user-gcp-sa
+    Worker:
+      replicas: 1
+      restartPolicy: OnFailure
+      template:
+        spec:
+          containers:
+          - name: tensorflow
+            image: gcr.io/your-project/your-image
+            command:
+              - python
+              - -m
+              - trainer.task
+              - --batch_size=32
+              - --training_steps=1000
+            env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/etc/secrets/user-gcp-sa.json"
+            volumeMounts:
+            - name: sa
+              mountPath: "/etc/secrets"
+              readOnly: true
+          volumes:
+          - name: sa
+            secret:
+              secretName: user-gcp-sa
+    Master:
+          replicas: 1
+          restartPolicy: OnFailure
+          template:
+            spec:
+              containers:
+              - name: tensorflow
+                image: gcr.io/your-project/your-image
+                command:
+                  - python
+                  - -m
+                  - trainer.task
+                  - --batch_size=32
+                  - --training_steps=1000
+                env:
+                - name: GOOGLE_APPLICATION_CREDENTIALS
+                  value: "/etc/secrets/user-gcp-sa.json"
+                volumeMounts:
+                - name: sa
+                  mountPath: "/etc/secrets"
+                  readOnly: true
+              volumes:
+              - name: sa
+                secret:
+                  secretName: user-gcp-sa

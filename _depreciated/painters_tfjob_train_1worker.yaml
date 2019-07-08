@@ -1,0 +1,34 @@
+apiVersion: kubeflow.org/v1
+kind: TFJob
+metadata:
+  generateName: tfjob_0
+  namespace: kubeflow
+spec:
+  tfReplicaSpecs:
+    Worker:
+      replicas: 1
+      restartPolicy: OnFailure
+      template:
+        spec:
+          containers:
+          - name: tensorflow
+            image: gcr.io/your-project/your-image
+            command:
+              - python
+              - /opt/model.py
+              - --tf-model-dir=gs://painters-mnist-2-1561980951/
+              - --tf-export-dir=gs://painters-mnist-2-1561980951/export/
+              - --tf-train-steps=10
+              - --tf-batch-size=32
+              - --tf-learning-rate=0.01
+            env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/var/secrets/user-gcp-sa.json"
+            volumeMounts:
+            - name: sa
+              mountPath: "/var/secrets"
+              readOnly: true
+          volumes:
+          - name: sa
+            secret:
+              secretName: user-gcp-sa
