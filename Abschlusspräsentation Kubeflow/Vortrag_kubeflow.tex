@@ -1,0 +1,131 @@
+%  \beamersetuncovermixins{\opaqueness<1>{25}}{\opaqueness<2->{15}}
+%  sorgt dafuer das die Elemente die erst noch kommen nur schwach 
+%  angedeutet erscheinen 
+
+%\documentclass[handout]{beamer}
+\documentclass{beamer}
+
+\usetheme{Frankfurt} 
+
+\usepackage{beamerthemeshadow}
+\usepackage[linesnumbered,ruled]{algorithm2e}
+\usepackage[ngerman]{babel}			% deutsche Namen/Umlaute
+\usepackage[latin1]{inputenc}			% Zeichensatzcodierung
+\usepackage{graphicx}				% Einbinden von Bildern
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{algpseudocode}
+\usepackage{default}
+\usepackage{cancel}
+\usepackage{float}
+\usepackage{color}
+\usepackage{tabularx}				% Erstellen von Tabellen
+
+
+
+\begin{document}
+
+\AtBeginSection []{
+\begin{frame}
+\tableofcontents[currentsection]
+\end{frame}
+}
+
+\setbeamertemplate{footline}[frame number]
+\title{Deep Learning on Kubeflow}  
+\subtitle{Big Data Praktikum}
+\author{Iurii Mozzhorin, Rebekka Pech}
+\date{15.07.2019} 
+
+\frame{\titlepage} 
+
+\frame{
+
+\begin{figure}[b]
+\flushright
+\includegraphics[width=2cm,height=4cm,keepaspectratio]{kubeflowlogo.png}
+\end{figure}
+\textbf{What is Kubeflow?}
+\begin{itemize}
+\item an open-source platform \\
+\item based on Kubernetes \\
+\item simple, portable and scalable deployments of ML \\
+\item integration of existing tools and libraries
+\end{itemize}
+}
+
+\frame{
+\textbf{Use Case}
+\begin{itemize}
+\item Train a CNN model to distinguish between works of 10 painters\\
+\item Dataset from kaggle\\
+\item Size of Dataset:  (after Resizing: )\\
+\item Objective: A model that gives a (good) predicition who painted the incoming image
+\end{itemize}
+}
+
+\frame{
+\textbf{Milestones}
+\begin{itemize}
+\item Create a model (transfer learning)\\
+\item Create a Docker image\\
+\item Train the model on GKE using TFJobs on CPUs\\
+\item Train the model on GKE using TFJobs on GPUs\\
+\item Distributed training on multiple pods\\
+\item Save the trained model into a GCS bucket\\
+\item Serve the model with TFServing
+\end{itemize}
+}
+
+\frame{
+\textbf{Technologies}
+\begin{itemize}
+\item TF for the model -> keras\\
+\item Docker + Kubernetes\\
+\item Kubectl + ksonnet -> kubectl + kustomize -> kubectl\\
+\item GCP dashboard/console + gcutil\\
+\item TF Serving: Tensorboard
+\end{itemize}
+}
+
+\frame{
+\textbf{Create a model}
+
+}
+
+\frame{
+\textbf{Create a Docker image}
+
+}
+
+\frame{
+\textbf{Train the model (CPU)}
+
+}
+
+\frame{
+\textbf{Train the model (GPU)}
+
+}
+
+\frame{
+\textbf{Problems}
+\begin{itemize}
+\item Keras: cannot save models/logs directly to a bucket\\
+\item Keras: no official support for distributed learning\\
+\item Kustomize/ksonnet
+\end{itemize}
+}
+
+\frame{
+\textbf{Conclusion}
+\begin{itemize}
+\item Requirement of understanding the used technologies (Dockers, Kubernetes, Keras...)\\
+\item still a raw version (ksonnet,...)
+\item Kubeflow is not for data science - it's for model training
+\end{itemize}
+}
+
+\end{document}
+

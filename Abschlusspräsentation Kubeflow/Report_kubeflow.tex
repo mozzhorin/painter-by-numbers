@@ -1,0 +1,89 @@
+%%%	\documentclass[12pt]{article}
+\documentclass[12pt,a4paper]{scrartcl}		% KOMA-Klassen benutzen!
+
+\usepackage[linesnumbered,ruled]{algorithm2e}
+\usepackage[ngerman]{babel}			% deutsche Namen/Umlaute
+\usepackage[latin1]{inputenc}			% Zeichensatzkodierung
+\usepackage{graphicx}				% Einbinden von Bildern
+%\usepackage{color}				% Farben wenn es sein muss
+\usepackage{amsmath}				% Mathematischer Formelsatz AMS
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{setspace}
+\usepackage[paper=a4paper,left=17mm,right=17mm,top=15mm,bottom=15mm]{geometry}
+
+\begin{document}
+
+
+\title{\LARGE Deep Learning on Kubeflow}
+\subtitle{\large Praktikum SoSe 2019: Big Data}
+\date{26.07.2019}
+\author{ \large Iurii Mozzhurin \& Rebekka Pech}
+\maketitle
+
+%\maketitle
+
+
+\section{Introduction}
+
+\noindent Kubeflow is an open source platform which is based on Kubernetes and was developed by Google. It's dedicated for making deployments of Machine Learning workflows on Kubernetes simple, portable (it works on any Kubernetes cluster) and scalable (upon need). Kubeflow makes it possible to bring ML in any existing cluster. \\
+
+\noindent When talking about Kubeflow you also have to talk about Kubernetes. Kubernetes is an open-source container-orchestration system. With Kubernetes you only need to define what resources the app needs, how many instances should be made, and Kubernetes takes care of deploying, managing and balancing containers on the hardware (nodes).\\  
+
+\noindent The main idea of Kubeflow is that it's a ready-to-use set of Machine Learning tools. It's not necessary to install and connect the tools separately, but it can be done automatically. It also provides GUI, which makes the work with them easy for non-programmers.\\
+ Kubeflow should be used for distributed ML workflow, for ML in production or for ML in cloud.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Use Case}
+
+\noindent The intention of our use case was to train a CNN model to distinguish between works of ten painters. In the end it should give a (good) prediction whose painting was given in the model. \\
+For this model we used a Dataset from \textit{kaggle} which has ... MB of datas. Because of the size we resized the images and decreased the dataset to ... MB.\\
+
+\noindent For our Use Case we had the following objectives:
+\begin{enumerate}
+\item Creation of a model for transfer learning in Python
+\item Creation of a Docker image for this model
+\item Training of the model on GKE using TensorFlowJobs on CPUs
+\item Training of the model on GKE using TensorFlowJobs on GPUs
+\item Distributed training on multiple pods
+\item Saving the trained model into a GCS bucket
+\item Serving the model with TensorFlowServing
+\end{enumerate}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Implementation of the Use Case}
+
+\subsection{Create the model}
+
+\subsection{Create a Docker}
+
+\subsection{Training}
+
+\subsection{Serving}
+
+\subsection{Results}
+
+\subsection{Problems}
+
+\noindent One of our Problems was that we used Keras, but Keras cannot save models/logs directly to the bucket. We had to save it locally and then send it to the bucket. \\
+Also there is no obvious support for distributed learning on one computer we could use. \\
+Another problem was using Kustomize and Ksonnet because they didn't worked.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusion}
+
+\noindent Kubeflow is a tool that is not for data science. It is for model training. 
+If you want to use Kubeflow you have to understand or learn a lot of technologies like Kubernetes, Docker, Keras etc. \\
+Also Kubeflow is still pretty raw - there are still many changes made. \\
+In conclusion we can say that it might be a helpful tool in the future when things are not this raw anymore. 
+
+
+
+
+
+
+
+
+
+\end{document}
