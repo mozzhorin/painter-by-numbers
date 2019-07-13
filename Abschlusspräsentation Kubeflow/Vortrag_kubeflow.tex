@@ -1,8 +1,3 @@
-%  \beamersetuncovermixins{\opaqueness<1>{25}}{\opaqueness<2->{15}}
-%  sorgt dafuer das die Elemente die erst noch kommen nur schwach 
-%  angedeutet erscheinen 
-
-%\documentclass[handout]{beamer}
 \documentclass{beamer}
 
 \usetheme{Frankfurt} 
@@ -59,7 +54,8 @@
 \textbf{Use Case}
 \begin{itemize}
 \item Train a CNN model to distinguish between works of 10 painters\\
-\item Dataset from kaggle\\
+\item Dataset from kaggle: https://www.kaggle.com/c/painter-by-numbers/\\
+Images with their information about artist, date, genre, style and title
 \item Size of Dataset:  (after Resizing: )\\
 \item Objective: A model that gives a (good) predicition who painted the incoming image
 \end{itemize}
@@ -81,10 +77,10 @@
 \frame{
 \textbf{Technologies}
 \begin{itemize}
-\item TF for the model \rightarrow keras\\
+\item TF for the model $\rightarrow$ keras\\
 \item Docker + Kubernetes\\
-\item Kubectl + ksonnet \rightarrow kubectl + kustomize \rightarrow kubectl\\
-\item GCP dashboard/console & gcutil\\
+\item Kubectl + ksonnet $\rightarrow$ kubectl + kustomize $\rightarrow$b kubectl\\
+\item GCP dashboard/console + gcutil\\
 \item TF Serving: Tensorboard
 \end{itemize}
 }
@@ -128,4 +124,5 @@
 }
 
 \end{document}
+
 
