@@ -158,7 +158,7 @@
 		\item Images dimensions $477 - 7444$ px
 		\item Selected \& resized: 
 		\begin{itemize}
-			\item archive 340 MB
+			\item 340 MB
 			\item 388 images $\times$ 10 artists
 			\item images smallest dimension 448 px 
 		\end{itemize}
@@ -211,8 +211,64 @@
 
 \end{frame}
 
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{Technologies}
+
+\begin{itemize}
+	\item Create the model: TF $\rightarrow$ Keras
+	\item Containers: Docker and Kubernetes
+	\item Manage pods (TFJobs): kubectl + ksonnet $\rightarrow$ kubectl + kustomize $\rightarrow$ kubectl
+	\item Manage KF deployment: GCP console, gcloud + gsutil
+	\item Manage data: PVC $\rightarrow$ GCS bucket
+	\item Monitoring: Tensorboard
+	\item Manage the model: TF Serving $\rightarrow$ Jupyter Notebook
+\end{itemize}
+
+\end{frame}
 
 %------------------------------------------------
+
+\begin{frame}
+\frametitle{Analysis \& reflexion}
+
+\begin{itemize}
+	\item \textbf{Keras} simplifies work with CNN models but have several restrictions:
+	\begin{itemize}
+		\item cannot work directly with GCS bucket
+		\item does not (directly) support distributed learning
+	\end{itemize}
+	\item \textbf{Tensorflow} requires additional learning time
+	\item \textbf{Kubeflow} is very raw
+	\begin{itemize}
+		\item rapid changes, low backward compatibility
+		\item requires learning of all underlying technologies 
+	\end{itemize}
+\end{itemize}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{References}
+
+\begin{itemize}
+	\item https://www.kubeflow.org/docs/
+	\item https://github.com/kubeflow/examples
+	\item https://www.kaggle.com/c/painter-by-numbers/
+	\item Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun. Deep Residual Learning for Image Recognition, arXiv:1512.03385
+	\item https://keras.io/
+	\item https://www.tensorflow.org/guide
+	\item https://kubernetes.io/docs/
+	
+\end{itemize}
+
+\end{frame}
+
+%------------------------------------------------
+
 \begin{frame}
 \Huge{\centerline{Thank you for your attention!}}\end{frame}
 
