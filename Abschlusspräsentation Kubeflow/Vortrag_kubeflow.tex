@@ -59,15 +59,17 @@
 \textbf{Use Case}
 \begin{itemize}
 \item Train a CNN model to distinguish between works of 10 painters\\
-\item Dataset from kaggle\\
-\item Size of Dataset:  (after Resizing: )\\
-\item Objective: A model that gives a (good) predicition who painted the incoming image
+\item Dataset from kaggle (https://www.kaggle.com/c/painter-by-numbers)\\
+\item Size of Dataset: 83 GB  (selected \& resized: 340 MB)\\
+\item Images from 477 to 7444 px
+\item 
 \end{itemize}
 }
 
 \frame{
 \textbf{Milestones}
 \begin{itemize}
+\item Data preprocessing
 \item Create a model (transfer learning)\\
 \item Create a Docker image\\
 \item Train the model on GKE using TFJobs on CPUs\\
@@ -81,10 +83,10 @@
 \frame{
 \textbf{Technologies}
 \begin{itemize}
-\item TF for the model \rightarrow keras\\
+\item TF for the model $\rightarrow$ keras\\
 \item Docker + Kubernetes\\
-\item Kubectl + ksonnet \rightarrow kubectl + kustomize \rightarrow kubectl\\
-\item GCP dashboard/console & gcutil\\
+\item Kubectl + ksonnet $\rightarrow$ kubectl + kustomize $\rightarrow$ kubectl\\
+\item GCP dashboard/console \& gcutil\\
 \item TF Serving: Tensorboard
 \end{itemize}
 }
