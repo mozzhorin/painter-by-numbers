@@ -22,7 +22,7 @@ def copy2bucket(file, bucket):
         with file_io.FileIO(os.path.join(bucket, file), mode='wb+') as o_f:
             o_f.write(i_f.read())
             print('Copied', file, 'to', bucket)
- 
+            
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
@@ -89,7 +89,6 @@ def parse_arguments():
 if __name__ == '__main__':
     
     args = parse_arguments()
-    #print(args)
     if args.transferlearning:
         weights = 'imagenet'
     else:
@@ -140,7 +139,7 @@ if __name__ == '__main__':
       activation='softmax' 
     ))
 
-    # do not train the first layer
+    # Do not train the first layer in transfer learning
     if args.transferlearning:
         model.layers[0].trainable = False
 
@@ -181,10 +180,8 @@ if __name__ == '__main__':
     print('Starting the training...')
     history_aug = model.fit_generator(
             train_generator_with_aug,
-            #steps_per_epoch=10,
             epochs=args.epochs,
             validation_data=validation_generator,
-            #validation_steps=1,
             shuffle=True,
             callbacks=[tensorboard])
     
