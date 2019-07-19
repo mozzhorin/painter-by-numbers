@@ -141,9 +141,9 @@ For the implementation of our use case we just changed the last layer with the t
 \item Preprocess the data
 \item Create a model for transfer learning in Python
 \item Create a Docker image for this model
-\item Traine the model on GKE using TensorFlowJobs on CPUs
+\item Train the model on GKE using TensorFlowJobs on CPUs
 \item Save the trained model
-\item Traine the model on GKE using TensorFlowJobs on GPUs, because it's much faster (about 15 times faster)
+\item Train the model on GKE using TensorFlowJobs on GPUs, because it's much faster (about 15 times faster)
 \item Distributed training on multiple pods
 \item Serving the model with TensorFlowServing
 \end{enumerate}
@@ -255,7 +255,7 @@ For the training we first used image augmentation and then trained the model:
 \subsection*{Save the model}
 \ \\  
 
-\noindent With Keras we couldn't save the model directly to the bucket. So we saved it locally first and then send it to the bucket (copy2bucket). 
+\noindent With Keras we couldn't save the model directly to the bucket. So we saved it locally first and then sent it to the bucket (copy2bucket). 
 \begin{lstlisting}
     print('>>>>>>>>>>>>>>>>>>>>>>>')
     print('Saiving the model localy...')
@@ -334,7 +334,7 @@ On the one hand Keras cannot work directly with GCS buckets. On the other hand K
 \noindent Tensorflow itself requires additional learning time if you want to use it.\\
 
 \noindent In conclusion we can say that Kubeflow is still very raw. There are rapid changes and a low backward compatibility. Also you have to learn all underlying technologies like Kubernetes, Docker, Tensorflow.\\
-Finally it's important to say that Kubeflow is a tool that is not for data science. It is for model training. \\
+Finally it's important to say that Kubeflow is a tool that is not suited for data science. It is more reasonable for model training. \\
 
 \noindent We only recommend it for machine learning and only for people that have experience or knowledge of the used tools in Kubeflow. Also we would recommend to use it more in the futur when Kubeflow is more sophisticated.
 \ \\
