@@ -122,7 +122,7 @@ We selected a small part of this data and also resized it to 448 Pixels on the s
 \subsection*{ResNet-50}
 \ \\  
 
-We have decided to use transfer learning, the technique often applied for small datasets, where a model is first trained on a much larger dataset, which is different from the main dataset. In this case, the model learns some important features of images, those later can be utilized to classify our target images.  
+We have decided to use transfer learning, the technique is often applied for small datasets, where a model is first trained on a much larger dataset which is different from the main dataset. In this case, the model learns some important features of images that can later be utilized to classify our target images.  
 
 For the use case, we selected \textit{ResNet-50} model \cite{resnet}, which is known for good results in image recognition, trained on more than a million images from the \textit{ImageNet} database. This residual convolution network is 50 layers deep and can classify images into 1000 object categories. To adapt the model for our task, we swapped the last layer of 1000 units with a layer of 10 units, fixed the weights in the rest of the network and during transfer learning trained only the last layer.  \\
 
@@ -133,7 +133,7 @@ Later on, we have also modified our code, so it can be used to train the whole m
 	\caption{Scheme of ResNet-34 from \cite{resnet}. Our model ResNet-50 has the same architecture but 50 layers instead of 34.}
 \end{figure}
 
-During training, we used different random image transformations, such as shift, rotation, and flip. This method is called image augmentation and used to prevent overfitting, so the model cannot just memorize all training images but is forced to learn some generalizations from them.\\
+During training, we used different random image transformations, such as shift, rotation, and flip. This method is called image augmentation and is used to prevent overfitting, so the model cannot just memorize all training images but is forced to learn some generalizations from them.\\
 
 \subsection*{Milestones}
 \ \\  
@@ -155,15 +155,15 @@ When we started our use case, we made a plan of the milestones we want to achiev
 \subsection*{Technologies}
 \ \\ 
 
-To exploit most of Kubeflow's functionality, we decided to deploy it on Google Cloud Platform (GCP), so we could try training on high-performance machines, with graphic accelerators and distributed training. To manage the deployment we used the GCP console, \verb|gcould| and \verb|gsutil|.\\
+To exploit most of Kubeflow's functionality, we decided to deploy it on Google Cloud Platform (GCP), so we could try training on high-performance machines with graphic accelerators and distributed training. To manage the deployment we used the GCP console, \verb|gcould| and \verb|gsutil|.\\
 
-We wanted to implement the model in Tensorflow(TF) because KF was originally developed by Google specifically for this framework, but soon have switched to Keras (with TF as a back-end). First, because TF is a pretty complicated package and requires additional time to study it. And second, transfer learning in TF is officially implemented using Keras \cite{tf}.\\
+We wanted to implement the model in Tensorflow(TF) because KF was originally developed by Google specifically for this framework, but soon have switched to Keras (with TF as a back-end). First, because TF is a pretty complicated package and requires additional time to study. And second, transfer learning in TF is officially implemented using Keras \cite{tf}.\\
 
 Keras is a front-end for different machine learning frameworks \cite{keras}, previously as a stand-alone library but now it is adopted as part of several packages including TF. It simplifies the usage of neural networks but lacks functionality.\\
 
 For the containers, we used Docker and Kubernetes as the main technologies in this field and also parts of KF. \\
 
-There are several ways to train a model in KF and we decided to use TFJobs on separate pods for this project. To manage the pods we previously wanted to use \verb|kubectl| and \verb|ksonnet|. The second one is used to create a template for a Kubernetes pod, and the first - to deploy the pod from the template. Unfortunately, \verb|ksonnet| was depreciated and removed from KF during our work on the project. It was replaced by \verb|kustomize| but large parts of the documentation and tutorials still were not updated. After unsuccessfully spending lots of time on \verb|kustomize|, we have developed the template for the training node by hand and applied it with \verb|kubectl|.\\
+There are several ways to train a model in KF and we decided to use TFJobs on separate pods for this project. To manage the pods we previously wanted to use \verb|kubectl| and \verb|ksonnet|. The second one is used to create a template for a Kubernetes pod, and the first to deploy the pod from the template. Unfortunately, \verb|ksonnet| was depreciated and removed from KF during our work on the project. It was replaced by \verb|kustomize| but large parts of the documentation and tutorials still were not updated. After unsuccessfully spending lots of time on \verb|kustomize|, we have developed the template for the training node by hand and applied it with \verb|kubectl|.\\
 
 Pods in Kubernetes are temporal, after finishing their task (like training) they will be deleted. So for storing the dataset, the trained model and the logs we needed persistent storage. First, we planed to use for these porpoises a Persistent Volume Claim (PVC), a special pod with storage space, but its management in KF requires \verb|ksonnet|, so for storing the model we decided to use a bucket on Google Cloud Storage (GCS) and the dataset was stored on a public host on the Internet (Dropbox).\\
 
@@ -190,7 +190,7 @@ In our case for the GCP project we had to additionally enable:
 
 Do not enable IAP if you want your KF to be available on the Internet, otherwise, you have to connect to it via port-forwarding. Instead of IAP we have used a login-password pair. Deployment using UI is very simple and usually takes 20-30 minutes.\\
 
-We have to mention that the usage of KF on GCP can cost a lot of money even in "inactive" mode when no training or prediction is executed. Therefore, we recommend to shut down the project each time when you do not use it. It can be done in GCP console in \textit{Project Settings}. After the shut down the project will pending for deletion for 30 days and you can restore it in \textit{IAM \& admin $\rightarrow$ Manage resources $\rightarrow$ Resources pending deletion} and then set the billing method in \textit{Billing}. \\
+We have to mention that the usage of KF on GCP can cost a lot of money even in "inactive" mode when no training or prediction is executed. Therefore, we recommend to shut down the project each time you not use it. It can be done in GCP console in \textit{Project Settings}. After the shut down the project will pending for deletion for 30 days and you can restore it in \textit{IAM \& admin $\rightarrow$ Manage resources $\rightarrow$ Resources pending deletion} and then set the billing method in \textit{Billing}. \\
 
 You can find all the CLI commands used in this project in Appendix 1. 
 
@@ -260,7 +260,7 @@ We also had to abandon the plan of using TF Serving because of the absence of ti
 \pagebreak
 \section{Results}
 
-The training results are presented in \textit{notebooks/test\_model.ipynb}. First, let us look at the metrics, model accuracy, and model loss are shown in Fig.3. One can see, that while training accuracy continues to grow, the average test accuracy stays approximately the same. It signifies that our model is overfitted. The serious jumps of the test accuracy are caused by a small size of the test dataset, normally it is recommended to use around 20\% of data for validating but we used only 5\% trying to keep the training set as large as possible. The model loss shows the same behavior.\\
+The training results are presented in \textit{notebooks/test\_model.ipynb}. The metrics, model accuracy, and model loss are shown in Fig.3. One can see, that while training accuracy continues to grow, the average test accuracy stays approximately the same. It signifies that our model is overfitted. The serious jumps of the test accuracy are caused by a small size of the test dataset, normally it is recommended to use around 20\% of data for validating but we used only 5\% trying to keep the training set as large as possible. The model loss shows the same behavior.\\
 
 \begin{figure}[H]
 	\center \includegraphics[width=0.85\textwidth]{model_acc}
@@ -271,9 +271,9 @@ The training results are presented in \textit{notebooks/test\_model.ipynb}. Firs
 \pagebreak
 In the same notebook, one can produce a prediction for a random image. Unfortunately, it also indicates that our model is severely overfitted.  As you can see the model returns the same prediction for each input image: it is always Renoir.\\
 
-We have tried several different techniques to improve the predictions. We have tried a different amount of augmentation, tried to shuffle the images and split them again in train and test sets, we have also trained the whole model, all 50 layers on the training dataset (without transfer learning). All that did not bring us any significant improvement.\\
+We have tried several different techniques to improve the predictions. We have tried a different amount of augmentation, tried to shuffle the images and split them again in train and test sets, we have also trained the whole model, all 50 layers on the training dataset (without transfer learning). All of that did not bring us any significant improvement.\\
 
-We assume that if this task even can be solved, it requires some specific model and a much larger dataset. Finding the difference in artists' styles seems to be far more difficult than an ordinary image recognition problem. 
+We assume that even if this task can be solved, it requires some specific model and a much larger dataset. Finding the difference in artists' styles seems to be far more difficult than an ordinary image recognition problem. 
 
 \begin{figure}[H]
 	\center \includegraphics[width=0.85\textwidth]{prediction}
