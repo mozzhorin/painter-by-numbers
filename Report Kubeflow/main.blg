@@ -1,0 +1,5 @@
+[0] Config.pm:302> INFO - This is Biber 2.9
+[0] Config.pm:305> INFO - Logfile is 'main.blg'
+[28] biber:313> INFO - === Fr Jul 26, 2019, 10:14:54
+[150] Utils.pm:185> ERROR - Cannot find control file 'main.bcf'! - did you pass the "backend=biber" option to BibLaTeX?
+[150] Biber.pm:114> INFO - ERRORS: 1
